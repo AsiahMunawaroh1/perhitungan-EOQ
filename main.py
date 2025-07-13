@@ -17,7 +17,12 @@ Simulasi ini digunakan untuk menghitung jumlah pemesanan optimal berdasarkan per
 biaya pemesanan, dan biaya penyimpanan per unit.
 
 ### Rumus EOQ:
-\\[ EOQ = \\sqrt{\\frac{2DS}{H}} \\]
+\[ EOQ = \sqrt{\frac{2DS}{H}} \]
+
+### Fitur:
+- **Input**: Permintaan tahunan, biaya pemesanan, dan biaya penyimpanan
+- **Output**: EOQ, total biaya persediaan, jumlah pemesanan per tahun
+- **Konsep**: Inventory Model – EOQ formula
 """)
 
 # Input pengguna
