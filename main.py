@@ -3,6 +3,8 @@
 
 import streamlit as st
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Konfigurasi halaman
 st.set_page_config(page_title="EOQ Calculator", layout="centered")
@@ -15,7 +17,7 @@ Simulasi ini digunakan untuk menghitung jumlah pemesanan optimal berdasarkan per
 biaya pemesanan, dan biaya penyimpanan per unit.
 
 ### Rumus EOQ:
-\[ EOQ = \sqrt{\frac{2DS}{H}} \]
+\\[ EOQ = \\sqrt{\\frac{2DS}{H}} \\]
 """)
 
 # Input pengguna
@@ -38,7 +40,27 @@ st.write(f"**Jumlah Pemesanan Optimal (EOQ)**: {EOQ:.2f} unit")
 st.write(f"**Jumlah Pemesanan per Tahun**: {jumlah_order_per_tahun:.2f} kali")
 st.write(f"**Total Biaya Persediaan**: Rp {biaya_total_persediaan:,.2f}")
 
-# Visualisasi sederhana
+# Grafik EOQ
+st.subheader("Grafik Biaya Total vs Kuantitas Order")
+order_qty_range = np.arange(1, D + 1)
+holding_cost = (order_qty_range / 2) * H
+ordering_cost = (D / order_qty_range) * S
+total_cost = holding_cost + ordering_cost
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(order_qty_range, total_cost, label='Total Biaya', color='blue')
+ax.plot(order_qty_range, holding_cost, '--', label='Biaya Penyimpanan', color='green')
+ax.plot(order_qty_range, ordering_cost, '--', label='Biaya Pemesanan', color='red')
+ax.axvline(EOQ, color='orange', linestyle=':', label=f'EOQ ≈ {EOQ:.0f}')
+ax.set_xlabel('Jumlah Order per Kali Pesan (unit)')
+ax.set_ylabel('Biaya (Rp)')
+ax.set_title('Analisis Biaya Persediaan terhadap Kuantitas Order')
+ax.legend()
+ax.grid(True)
+
+st.pyplot(fig)
+
+# Interpretasi hasil
 st.subheader("Interpretasi")
 st.markdown(f"Dengan EOQ sebesar **{EOQ:.2f} unit**, perusahaan sebaiknya memesan barang sebanyak itu setiap kali pemesanan dilakukan untuk meminimalkan biaya total persediaan. Dalam satu tahun, diperkirakan akan ada sekitar **{jumlah_order_per_tahun:.2f} kali pemesanan**.")
 
